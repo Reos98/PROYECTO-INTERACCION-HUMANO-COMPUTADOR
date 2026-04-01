@@ -1,0 +1,184 @@
+{% extends 'base.html' %}
+
+{% block title %}Información | MotoSafe{% endblock %}
+
+{% block extra_css %}
+<style>
+    .info-container {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 3rem;
+        max-width: 900px;
+        margin: 0 auto;
+    }
+
+    .info-section {
+        background: var(--surface);
+        padding: 2.5rem;
+        border-radius: 16px;
+        border: 1px solid var(--border);
+        box-shadow: 0 4px 6px rgba(0,0,0,0.02);
+    }
+
+    .info-section h2 {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        color: var(--text-main);
+        margin-top: 0;
+        border-bottom: 2px solid var(--background);
+        padding-bottom: 1rem;
+        margin-bottom: 1.5rem;
+    }
+
+    .info-section p {
+        line-height: 1.7;
+        color: var(--text-muted);
+        font-size: 1.05rem;
+        margin-bottom: 1.5rem;
+    }
+
+    /* Formulario de Contacto - HCI: Ley de Fitts, campos de texto interactivos (Touch Targets) extensos */
+    .form-group {
+        margin-bottom: 1.5rem;
+    }
+
+    .form-group label {
+        display: block;
+        font-weight: 500;
+        margin-bottom: 0.5rem;
+        color: var(--text-main);
+    }
+
+    .form-control {
+        width: 100%;
+        padding: 0.8rem 1rem;
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        font-size: 1rem;
+        color: var(--text-main);
+        background: var(--background);
+        transition: all 0.2s ease;
+        box-sizing: border-box;
+    }
+
+    .form-control:focus {
+        outline: none;
+        border-color: var(--primary);
+        box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+        background: var(--surface);
+    }
+
+    textarea.form-control {
+        resize: vertical;
+        min-height: 120px;
+    }
+
+    /* Reseñas */
+    .reviews-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 1.5rem;
+    }
+
+    .review-card {
+        background: var(--background);
+        padding: 1.5rem;
+        border-radius: 12px;
+        border: 1px solid var(--border);
+    }
+
+    .review-stars {
+        color: #f59e0b;
+        margin-bottom: 0.5rem;
+        display: flex;
+        gap: 0.25rem;
+    }
+
+    .review-text {
+        font-style: italic;
+        color: var(--text-main);
+        margin-bottom: 1rem;
+        font-size: 0.95rem;
+        line-height: 1.5;
+    }
+
+    .review-author {
+        font-weight: 600;
+        color: var(--text-muted);
+        font-size: 0.9rem;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="info-container">
+    <div class="info-section">
+        <h2><i data-lucide="info" color="var(--primary)"></i> Sobre Nosotros</h2>
+        <p>En <strong>MotoSafe</strong> somos una empresa apasionada por la seguridad sobre ruedas. Nos dedicamos a la venta, asesoría y distribución de cascos para motociclismo, ciclismo urbano y de montaña, además de deportes extremos. Nuestro objetivo principal es proteger la vida e integridad de los viajeros ecuatorianos.</p>
+        <p>Desde nuestra fundación, nos aseguramos de brindar equipos que cumplen con las normas internacionales de seguridad más estrictas (DOT, ECE 22.06), porque sabemos que en la vía, tu casco no es solo un accesorio deportivo, es tu mejor seguro de vida.</p>
+    </div>
+
+    <!-- Sección de Opiniones - HCI: "Social Proof" construye credibilidad e incrementa el prestigio del e-commerce. -->
+    <div class="info-section">
+        <h2><i data-lucide="message-square-heart" color="var(--primary)"></i> Opiniones de la Comunidad</h2>
+        <div class="reviews-grid">
+            <div class="review-card">
+                <div class="review-stars">
+                    <i data-lucide="star" fill="#f59e0b"></i><i data-lucide="star" fill="#f59e0b"></i><i data-lucide="star" fill="#f59e0b"></i><i data-lucide="star" fill="#f59e0b"></i><i data-lucide="star" fill="#f59e0b"></i>
+                </div>
+                <div class="review-text">"Excelente calidad en los cascos integrales. La asesoría de la web me ayudó a encontrar la talla L perfecta para mí. Recomiendo MotoSafe al 100%."</div>
+                <div class="review-author">- Carlos M., Motociclista</div>
+            </div>
+            
+            <div class="review-card">
+                <div class="review-stars">
+                    <i data-lucide="star" fill="#f59e0b"></i><i data-lucide="star" fill="#f59e0b"></i><i data-lucide="star" fill="#f59e0b"></i><i data-lucide="star" fill="#f59e0b"></i><i data-lucide="star"></i>
+                </div>
+                <div class="review-text">"Compré un casco Thousand y el envío fue rapidísimo. La página es súper fácil de usar al celular. Ojalá trajeran más colores."</div>
+                <div class="review-author">- Andrea F., Ciclista Urbana</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Formulario de Contacto. Prevención de errores con el Required e inputs semánticos HTML5 -->
+    <div class="info-section">
+        <h2><i data-lucide="mail-plus" color="var(--primary)"></i> Envíanos un Correo</h2>
+        <p style="margin-bottom: 2rem;">¿Tienes alguna sugerencia o quieres darnos retroalimentación? Déjanos tus datos, selecciona qué requieres y te responderemos a la brevedad.</p>
+        
+        <form action="#" method="POST" onsubmit="event.preventDefault(); alert('¡Correo enviado con éxito! Recibirás noticias de MotoSafe pronto.');">
+            <div class="form-group">
+                <label for="nombre">Nombre Completo</label>
+                <input type="text" id="nombre" name="nombre" class="form-control" placeholder="Ej. Juan Pérez" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="email">Correo Electrónico (Tu contacto)</label>
+                <!-- HCI: El tipo 'email' lanza teclados adaptados en móvil (con el '@' visible) -->
+                <input type="email" id="email" name="email" class="form-control" placeholder="juan@ejemplo.com" required>
+            </div>
+
+            <!-- Interfaz para calificar la intención u objetivo del usuario -->
+            <div class="form-group">
+                <label for="asunto">Quién eres y tu intención</label>
+                <select id="asunto" name="asunto" class="form-control" required style="cursor: pointer;">
+                    <option value="" disabled selected>Selecciona tu principal interés...</option>
+                    <option value="consulta">Soy cliente: Consulta de garantía / producto</option>
+                    <option value="proveedor">Soy marca/distribuidor: Deseo ser proveedor</option>
+                    <option value="mayorista">Soy emprendedor: Compras al por mayor</option>
+                    <option value="sugerencia">Soy visitante: Sugerencia o Felicitar</option>
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label for="mensaje">Detalla tu Mensaje</label>
+                <textarea id="mensaje" name="mensaje" class="form-control" placeholder="Escribe aquí los motivos completos de tu acercamiento..." required></textarea>
+            </div>
+
+            <button type="submit" class="btn btn-primary" style="padding: 0.9rem 2rem; font-size: 1.05rem; margin-top: 1rem;">
+                Enviar Correo Electrónico <i data-lucide="send-horizontal" size="18"></i>
+            </button>
+        </form>
+    </div>
+</div>
+{% endblock %}

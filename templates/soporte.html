@@ -1,0 +1,174 @@
+{% extends 'base.html' %}
+
+{% block title %}Soporte y Contacto | MotoSafe{% endblock %}
+
+{% block extra_css %}
+<style>
+    .support-wrapper {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 2rem;
+        max-width: 1100px;
+        margin: 0 auto;
+    }
+
+    @media (max-width: 768px) {
+        .support-wrapper {
+            grid-template-columns: 1fr;
+        }
+    }
+
+    .support-card {
+        background: var(--surface);
+        padding: 2.5rem;
+        border-radius: 16px;
+        border: 1px solid var(--border);
+        box-shadow: 0 4px 6px rgba(0,0,0,0.02);
+    }
+    
+    .support-card h2 {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        color: var(--text-main);
+        margin-top: 0;
+        border-bottom: 2px solid var(--background);
+        padding-bottom: 1rem;
+        margin-bottom: 1.5rem;
+    }
+
+    .contact-list {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+
+    .contact-item {
+        display: flex;
+        align-items: flex-start;
+        gap: 1rem;
+        margin-bottom: 1.5rem;
+        padding-bottom: 1.5rem;
+        border-bottom: 1px solid var(--border);
+    }
+
+    .contact-item:last-child {
+        border-bottom: none;
+        margin-bottom: 0;
+        padding-bottom: 0;
+    }
+
+    .contact-icon {
+        background: var(--background);
+        color: var(--primary);
+        padding: 0.8rem;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border: 1px solid var(--border);
+    }
+
+    .contact-data h3 {
+        margin: 0 0 0.35rem 0;
+        font-size: 1.1rem;
+        color: var(--text-main);
+    }
+
+    .contact-data p {
+        margin: 0;
+        color: var(--text-muted);
+        line-height: 1.6;
+        font-size: 0.95rem;
+    }
+
+    /* Mapa Simulado */
+    .map-container {
+        width: 100%;
+        height: 350px;
+        background: #e2e8f0;
+        border-radius: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        color: var(--text-muted);
+        overflow: hidden;
+        border: 1px solid var(--border);
+        position: relative;
+    }
+    
+    .map-badge {
+        position: absolute;
+        bottom: 15px;
+        background: var(--surface);
+        padding: 0.5rem 1rem;
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        font-size: 0.85rem;
+        color: var(--text-main);
+        font-weight: 500;
+        border: 1px solid var(--border);
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div style="text-align: center; margin-bottom: 3rem;">
+    <h1 style="font-size: 2.5rem; color: var(--text-main); margin-bottom: 0.5rem;">Centro de Soporte</h1>
+    <p style="font-size: 1.1rem; color: var(--text-muted);">Información de atención al cliente y visita a nuestro local matriz.</p>
+</div>
+
+<div class="support-wrapper">
+    <!-- Panel de Datos de Contacto -->
+    <div class="support-card">
+        <h2><i data-lucide="headset" color="var(--primary)"></i> Atención Personalizada</h2>
+        
+        <ul class="contact-list">
+            <li class="contact-item">
+                <div class="contact-icon"><i data-lucide="phone"></i></div>
+                <div class="contact-data">
+                    <h3>Atención Telefónica</h3>
+                    <p><strong>+593 9 1234 5678</strong></p>
+                    <p style="font-size: 0.85rem; margin-top: 0.2rem; color: #94a3b8;">Horario: Lunes a Viernes, de 09:00 a 18:00</p>
+                </div>
+            </li>
+            
+            <li class="contact-item">
+                <div class="contact-icon"><i data-lucide="mail"></i></div>
+                <div class="contact-data">
+                    <h3>Soporte por Correo</h3>
+                    <p>ayuda@motosafe.ec</p>
+                    <p style="font-size: 0.85rem; margin-top: 0.2rem; color: #94a3b8;">Canal preferido para devoluciones y garantías.</p>
+                </div>
+            </li>
+
+            <li class="contact-item">
+                <div class="contact-icon"><i data-lucide="map-pin"></i></div>
+                <div class="contact-data">
+                    <h3>Nuestra Tienda Matriz</h3>
+                    <p>Ubicada en la Provincia de Pichincha, Cantón Quito, en el tradicional sector de La Villaflora.</p>
+                </div>
+            </li>
+        </ul>
+    </div>
+
+    <!-- Panel de Ubicación - HCI: Elemento visual de 'confianza'. El anclar negocios a sitios físicos previene miedo al fraude online -->
+    <div class="support-card">
+        <h2><i data-lucide="map" color="var(--primary)"></i> Visítanos en La Villaflora</h2>
+        <p style="color: var(--text-muted); margin-bottom: 1.5rem; line-height: 1.6;">
+            Te invitamos a acercarte a probarte las tallas personalmente y recibir la mejor asesoría presencial en la capital.
+        </p>
+        
+        <div class="map-container">
+            <i data-lucide="map" size="56" color="#94a3b8" style="margin-bottom: 1rem;"></i>
+            <span style="font-weight: 600; color: var(--text-main); font-size: 1.1rem;">La Villaflora, Quito, Pichincha</span>
+            <span style="font-size: 0.85rem; margin-top: 0.5rem; max-width: 80%; text-align: center;">Integración de la API de Google Maps o OpenStreetMaps iría en este bloque iframe.</span>
+            
+            <div class="map-badge">
+                <i data-lucide="store" size="14" style="vertical-align: middle;"></i> MotoSafe Matriz - Abierto Ahora
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

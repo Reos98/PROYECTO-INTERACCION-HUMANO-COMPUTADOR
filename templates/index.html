@@ -1,0 +1,145 @@
+{% extends 'base.html' %}
+
+{% block title %}Inicio | MotoSafe{% endblock %}
+
+{% block extra_css %}
+<style>
+    /* Hero Banner - HCI: Uso de grandes bloques visuales con excelente jerarquía tipográfica */
+    .hero {
+        background: linear-gradient(rgba(15, 23, 42, 0.7), rgba(15, 23, 42, 0.7)), url('https://images.unsplash.com/photo-1558981403-c5f9899a28bc?q=80&w=1200&auto=format&fit=crop') center/cover;
+        color: white;
+        border-radius: 16px;
+        padding: 5rem 2rem;
+        text-align: center;
+        margin-bottom: 3rem;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    }
+    
+    .hero h1 {
+        font-size: 3rem;
+        margin-bottom: 1rem;
+        font-weight: 700;
+        text-shadow: 0 2px 4px rgba(0,0,0,0.6);
+        line-height: 1.1;
+    }
+
+    .hero p {
+        font-size: 1.15rem;
+        margin-bottom: 2.5rem;
+        color: #e2e8f0;
+        max-width: 650px;
+        margin-left: auto;
+        margin-right: auto;
+        line-height: 1.6;
+    }
+
+    /* Grid de Cascos */
+    .section-title {
+        font-size: 1.8rem;
+        color: var(--text-main);
+        margin-bottom: 1.5rem;
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+    }
+
+    .products-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+        gap: 2rem;
+        margin-bottom: 2rem;
+    }
+
+    /* Tarjetas Interactivas - HCI: El elemento es intuitivamente un bloque clickeable. Sus micro-animaciones brindan confirmación táctil/visual. */
+    .product-card {
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        overflow: hidden;
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .product-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 12px 20px -5px rgba(0,0,0,0.12);
+        border-color: #cbd5e1;
+    }
+
+    .product-image {
+        width: 100%;
+        height: 240px;
+        object-fit: cover;
+        border-bottom: 1px solid var(--border);
+    }
+
+    .product-content {
+        padding: 1.5rem;
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .product-category {
+        font-size: 0.8rem;
+        color: var(--primary);
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        margin-bottom: 0.5rem;
+    }
+
+    .product-title {
+        font-size: 1.15rem;
+        margin: 0 0 1rem 0;
+        color: var(--text-main);
+    }
+
+    .product-price {
+        font-size: 1.35rem;
+        font-weight: 700;
+        color: var(--text-main);
+        margin-bottom: 1.5rem;
+        margin-top: auto; /* Empuja el precio y botón al final del card (Alineación visual consistente) */
+    }
+
+    .product-card .btn {
+        width: 100%;
+        justify-content: center;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<!-- HCI: Call to Action (CTA) destacado en el hero para canalizar usuarios a la información clave -->
+<section class="hero">
+    <h1>Protección Superior para tu Viaje</h1>
+    <p>Descubre nuestra colección de cascos premium. Diseño aerodinámico, materiales de alta resistencia y la tecnología más avanzada para tu completa seguridad.</p>
+    <a href="#catalogo" class="btn btn-primary" style="font-size: 1.1rem; padding: 0.9rem 2.5rem; border-radius: 999px;">
+        Ver Colección Completa
+    </a>
+</section>
+
+<section id="catalogo">
+    <h2 class="section-title"><i data-lucide="award" color="var(--primary)"></i> Destacados de la Semana</h2>
+    
+    <div class="products-grid">
+        {% for casco in cascos %}
+        <!-- HCI: El uso de Ley de proximidad en UX, cada tarjeta agrupa información de 1 solo sujeto y su respectiva acción de compra -->
+        <article class="product-card">
+            <img class="product-image" src="{{ casco.imagen }}" alt="Fotografía del producto: {{ casco.nombre }}">
+            <div class="product-content">
+                <span class="product-category">{{ casco.tipo }}</span>
+                <h3 class="product-title">{{ casco.nombre }}</h3>
+                <div class="product-price">${{ "%.2f"|format(casco.precio) }}</div>
+                
+                <a href="{{ url_for('add_to_cart', id=casco.id) }}" class="btn btn-primary" aria-label="Añadir {{ casco.nombre }} al Carrito">
+                    <i data-lucide="shopping-cart" size="18"></i> Añadir al Carrito
+                </a>
+            </div>
+        </article>
+        {% endfor %}
+    </div>
+</section>
+{% endblock %}

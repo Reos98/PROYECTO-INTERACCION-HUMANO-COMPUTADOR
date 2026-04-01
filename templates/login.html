@@ -1,0 +1,142 @@
+{% extends 'base.html' %}
+
+{% block title %}Iniciar Sesión | MotoSafe{% endblock %}
+
+{% block extra_css %}
+<style>
+    .login-container {
+        max-width: 420px;
+        margin: 3rem auto;
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: 16px;
+        padding: 2.5rem;
+        box-shadow: 0 10px 25px -5px rgba(0,0,0,0.05);
+    }
+
+    .login-header {
+        text-align: center;
+        margin-bottom: 2rem;
+    }
+
+    .login-header h1 {
+        font-size: 1.75rem;
+        color: var(--text-main);
+        margin-bottom: 0.5rem;
+    }
+
+    .login-header p {
+        color: var(--text-muted);
+        font-size: 0.95rem;
+    }
+
+    /* Formulario Limpio - HCI: Etiquetas muy próximas a los inputs evitan saltos visuales confusos para el usuario */
+    .form-group {
+        margin-bottom: 1.5rem;
+    }
+
+    .form-group label {
+        display: block;
+        font-weight: 500;
+        margin-bottom: 0.5rem;
+        color: var(--text-main);
+        font-size: 0.95rem;
+    }
+
+    .form-control {
+        width: 100%;
+        padding: 0.8rem 1rem;
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        font-size: 1rem;
+        color: var(--text-main);
+        background: var(--background);
+        transition: all 0.2s ease;
+        box-sizing: border-box; 
+    }
+
+    /* HCI: Enfoque evidente del input activo (Focus State). Crucial para accesibilidad y usabilidad via teclado */
+    .form-control:focus {
+        outline: none;
+        border-color: var(--primary);
+        background: var(--surface);
+        box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.1);
+    }
+
+    .btn-block {
+        width: 100%;
+        justify-content: center;
+        padding: 0.9rem;
+        font-size: 1.05rem;
+        margin-top: 1rem;
+    }
+
+    .login-footer {
+        text-align: center;
+        margin-top: 2rem;
+        font-size: 0.95rem;
+        color: var(--text-muted);
+        border-top: 1px solid var(--border);
+        padding-top: 1.5rem;
+    }
+    
+    .login-footer a {
+        color: var(--primary);
+        font-weight: 600;
+        text-decoration: none;
+    }
+    
+    .login-footer a:hover {
+        text-decoration: underline;
+    }
+
+    .help-link {
+        font-size: 0.85rem; 
+        color: var(--primary); 
+        text-decoration: none;
+        font-weight: 500;
+        transition: color 0.2s;
+    }
+
+    .help-link:hover {
+        color: var(--primary-hover);
+        text-decoration: underline;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="login-container">
+    <div class="login-header">
+        <i data-lucide="user-circle-2" size="52" color="var(--primary)" style="margin-bottom: 1rem;"></i>
+        <h1>Bienvenido de Nuevo</h1>
+        <p>Inicia sesión con las credenciales demo: <strong>admin</strong> y <strong>1234</strong></p>
+    </div>
+
+    <!-- HCI: Se usa "for" para enlazar la label con el "id" de input. Ayuda si se clickea en la palabra en lugar de la caja -->
+    <form action="{{ url_for('login') }}" method="POST">
+        <div class="form-group">
+            <label for="username">Usuario o Correo</label>
+            <input type="text" id="username" name="username" class="form-control" placeholder="Ej. admin" autocomplete="username">
+        </div>
+        
+        <div class="form-group">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
+                <label for="password" style="margin-bottom: 0;">Contraseña</label>
+                <!-- HCI: Recuperación de errores y prevención de frustración en casos de olvido -->
+                <a href="#" class="help-link">¿Olvidaste tu contraseña?</a>
+            </div>
+            <input type="password" id="password" name="password" class="form-control" placeholder="••••••••" autocomplete="current-password">
+        </div>
+
+        <button type="submit" class="btn btn-primary btn-block">
+            Ingresar a la cuenta <i data-lucide="log-in" size="20"></i>
+        </button>
+    </form>
+
+    <div class="login-footer">
+        ¿Aún no tienes una cuenta MotoSafe? <br>
+        <a href="{{ url_for('registro') }}" style="display:inline-block; margin-top:0.5rem;">Crear cuenta nueva</a>
+    </div>
+</div>
+{% endblock %}

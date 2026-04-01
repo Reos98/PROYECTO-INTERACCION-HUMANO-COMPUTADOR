@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- HCI: El título descriptivo mejora la orientación del usuario y visibilidad a nivel de pestañas -->
+    <title>{% block title %}MotoSafe | Especialistas en Cascos{% endblock %}</title>
+    
+    <!-- Diseño: Tipografía moderna y paleta de colores para una experiencia premium -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        :root {
+            /* Paleta de colores de alto contraste - HCI: Mejora la accesibilidad y la lectura rápida */
+            --primary: #2563eb;
+            --primary-hover: #1d4ed8;
+            --secondary: #0f172a;
+            --background: #f8fafc;
+            --surface: #ffffff;
+            --text-main: #1e293b;
+            --text-muted: #64748b;
+            --border: #e2e8f0;
+            --error: #ef4444;
+            --success: #22c55e;
+            --warning: #f59e0b;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: var(--background);
+            color: var(--text-main);
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        /* ========================
+           HEADER & NAV (Navegación Global)
+           ======================== */
+        /* HCI: Sticky header permite acceder a la navegación principal, buscador y carrito sin necesidad de scrollear arriba */
+        header {
+            background-color: var(--surface);
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: opacity 0.2s;
+        }
+        .logo:hover { opacity: 0.8; }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* HCI: Los estados de Hover comunican claras posibilidades de interacción */
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-main);
+            font-weight: 500;
+            transition: color 0.2s ease, transform 0.2s ease;
+        }
+
+        .nav-links a:hover, .nav-links a:focus {
+            color: var(--primary);
+        }
+
+        .nav-actions {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+        }
+
+        /* Buscador - HCI: Inputs visibles y accesibles */
+        .search-bar {
+            display: flex;
+            align-items: center;
+            background: var(--background);
+            border-radius: 999px;
+            padding: 0.5rem 1rem;
+            border: 1px solid var(--border);
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+        
+        .search-bar:focus-within {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+        }
+
+        .search-bar input {
+            border: none;
+            background: transparent;
+            outline: none;
+            padding: 0.2rem 0.5rem;
+            font-size: 0.95rem;
+            color: var(--text-main);
+            width: 200px;
+        }
+
+        /* Botones - HCI: Size (Touch Targets) amplios y contraste claro en CTAs */
+        .btn {
+            padding: 0.6rem 1.2rem;
+            border-radius: 8px;
+            font-weight: 600;
+            text-decoration: none;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.95rem;
+            border: 1px solid transparent;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+            box-shadow: 0 2px 4px rgba(37, 99, 235, 0.2);
+        }
+
+        .btn-primary:hover {
+            background: var(--primary-hover);
+            transform: translateY(-1px);
+            box-shadow: 0 4px 6px rgba(37, 99, 235, 0.3);
+        }
+        
+        .btn-secondary {
+            background: var(--surface);
+            color: var(--text-main);
+            border: 1px solid var(--border);
+        }
+        
+        .btn-secondary:hover {
+            background: var(--background);
+            border-color: var(--text-muted);
+        }
+
+        .cart-icon {
+            position: relative;
+            color: var(--text-main);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            padding: 0.5rem;
+            border-radius: 50%;
+            transition: background 0.2s;
+        }
+        
+        .cart-icon:hover {
+            background: var(--background);
+        }
+
+        /* HCI: Visibilidad del Estado del Sistema. Badge dinámica e intuitiva */
+        .cart-badge {
+            position: absolute;
+            top: 0px;
+            right: 0px;
+            background: var(--error);
+            color: white;
+            font-size: 0.75rem;
+            font-weight: 700;
+            border-radius: 50%;
+            height: 18px;
+            width: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.2);
+        }
+
+        /* ========================
+           FEEDBACK VISUAL Y FLASHES
+           ======================== */
+        .flashes-container {
+            max-width: 1200px;
+            margin: 1.5rem auto 0;
+            padding: 0 1rem;
+        }
+
+        /* HCI: Alertas consistentes con colores semánticos y animaciones suaves para no asustar al usuario */
+        .flash {
+            padding: 1rem 1.2rem;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            animation: slideDown 0.3s ease-out;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+        
+        @keyframes slideDown {
+            from { transform: translateY(-10px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        .flash.success { background-color: #dcfce7; color: #166534; border: 1px solid #bbf7d0; }
+        .flash.error { background-color: #fee2e2; color: #991b1b; border: 1px solid #fecaca; }
+        .flash.info { background-color: #e0f2fe; color: #075985; border: 1px solid #bae6fd; }
+
+        /* ========================
+           MAIN LAYOUT
+           ======================== */
+        main {
+            flex: 1;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem 1rem;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        /* ========================
+           FOOTER
+           ======================== */
+        /* HCI: Un footer organizado previene que el usuario se quede en un callejón sin salida (Dead Ends) */
+        footer {
+            background: var(--secondary);
+            color: white;
+            padding: 4rem 1rem 2rem;
+            margin-top: auto;
+        }
+        
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 3rem;
+            padding-bottom: 3rem;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .footer-col h3 {
+            margin-top: 0;
+            color: #f8fafc;
+            font-size: 1.1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .footer-col ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 0.8rem;
+        }
+
+        .footer-col a {
+            color: #94a3b8;
+            text-decoration: none;
+            transition: color 0.2s;
+            font-size: 0.95rem;
+        }
+
+        .footer-col a:hover {
+            color: white;
+        }
+
+        .footer-bottom {
+            max-width: 1200px;
+            margin: 2rem auto 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: #64748b;
+            font-size: 0.875rem;
+        }
+    </style>
+    <!-- Agregamos styles extra que puedan ser necesarios en herederos -->
+    {% block extra_css %}{% endblock %}
+</head>
+<body>
+
+    <header>
+        <div class="nav-container">
+            <a href="{{ url_for('index') }}" class="logo">
+                <i data-lucide="shield" color="var(--primary)" size="28"></i> MotoSafe
+            </a>
+            
+            <nav>
+                <ul class="nav-links">
+                    <li><a href="{{ url_for('index') }}">Inicio</a></li>
+                    <li><a href="{{ url_for('catalogo') }}">Catálogo</a></li>
+                    <li><a href="{{ url_for('info') }}">Información</a></li>
+                    <li><a href="{{ url_for('soporte') }}">Soporte</a></li>
+                </ul>
+            </nav>
+
+            <div class="nav-actions">
+                <div class="search-bar">
+                    <i data-lucide="search" size="18" color="var(--text-muted)"></i>
+                    <!-- HCI: El placeholder informa al usuario claramente la acción del input -->
+                    <input type="text" placeholder="Buscar cascos..." aria-label="Buscar productos">
+                </div>
+
+                {% if session.user %}
+                    <span style="font-size: 0.95rem; color: var(--text-muted);">Hola, <strong style="color: var(--text-main);">{{ session.user }}</strong></span>
+                    <a href="{{ url_for('logout') }}" class="btn btn-secondary" style="color: var(--error);">Salir</a>
+                {% else %}
+                    <a href="{{ url_for('login') }}" class="btn btn-primary">Iniciar Sesión</a>
+                {% endif %}
+
+                <a href="{{ url_for('carrito') }}" class="cart-icon" aria-label="Ver carrito">
+                    <i data-lucide="shopping-cart"></i>
+                    <!-- HCI: Cantidad de items visual y dinámica -->
+                    <span class="cart-badge">{{ cart_count }}</span>
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- HCI: Provisión de feedback frente a acciones en forma de alertas flash -->
+    <div class="flashes-container">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="flash {{ category }}">
+                        {% if category == 'success' %}<i data-lucide="check-circle" size="20"></i>
+                        {% elif category == 'error' %}<i data-lucide="alert-circle" size="20"></i>
+                        {% else %}<i data-lucide="info" size="20"></i>{% endif %}
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+    </div>
+
+    <!-- MAIN donde inyectaremos las vistas hijas (index, login, carrito, etc) -->
+    <main>
+        {% block content %}
+        {% endblock %}
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-col">
+                <div class="logo" style="margin-bottom: 1rem; font-size:1.25rem;">
+                    <i data-lucide="shield" color="white" size="24"></i> <span style="color:white">MotoSafe</span>
+                </div>
+                <p style="color: #94a3b8; font-size: 0.95rem; line-height: 1.6;">
+                    Tu seguridad es nuestra prioridad. Diseño integral con enfoque en Interacción Humano-Computador para que encuentres el casco perfecto.
+                </p>
+            </div>
+            <div class="footer-col">
+                <h3>Enlaces Rápidos</h3>
+                <ul>
+                    <li><a href="{{ url_for('catalogo') }}">Ver Catálogo</a></li>
+                    <li><a href="{{ url_for('info') }}">Sobre Nosotros</a></li>
+                    <li><a href="#">Términos y Condiciones</a></li>
+                    <li><a href="#">Política de Privacidad</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h3>Ayuda al Usuario</h3>
+                <ul>
+                    <li><a href="{{ url_for('soporte') }}">Centro de Ayuda</a></li>
+                    <li><a href="#">Guía de Tallas (HCI)</a></li>
+                    <li><a href="#">Envíos y Devoluciones</a></li>
+                    <li><a href="#">Contacto</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <span>&copy; 2026 MotoSafe. Proyecto de IHC.</span>
+            <div style="display: flex; gap: 1rem;">
+                <!-- Iconos sociales de demostración -->
+                <a href="#" style="color: #64748b;"><i data-lucide="instagram" size="20"></i></a>
+                <a href="#" style="color: #64748b;"><i data-lucide="facebook" size="20"></i></a>
+                <a href="#" style="color: #64748b;"><i data-lucide="twitter" size="20"></i></a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // HCI: Renderizamos iconografía concisa, reconocible universalmente 
+        lucide.createIcons();
+        
+        // Pequeño script para ocultar flashes automáticamente si se desea, 
+        // aunque dejarlos fijos y que el usuario los cierre es una alternativa válida de HCI
+        setTimeout(() => {
+            const flashes = document.querySelectorAll('.flash');
+            flashes.forEach(flash => {
+                flash.style.opacity = '0';
+                flash.style.transform = 'translateY(-10px)';
+                flash.style.transition = 'all 0.3s ease';
+                setTimeout(() => flash.remove(), 300);
+            });
+        }, 5000);
+    </script>
+</body>
+</html>

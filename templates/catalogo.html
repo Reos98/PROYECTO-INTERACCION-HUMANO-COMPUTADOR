@@ -1,0 +1,122 @@
+{% extends 'base.html' %}
+
+{% block title %}Catálogo Completo | MotoSafe{% endblock %}
+
+{% block extra_css %}
+<!-- Heredando estilos conceptuales del index -->
+<style>
+    .page-header {
+        text-align: center;
+        padding: 3rem 1rem;
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        margin-bottom: 2rem;
+    }
+    
+    .page-header h1 {
+        font-size: 2.2rem;
+        margin-bottom: 0.5rem;
+        color: var(--text-main);
+    }
+    
+    .page-header p {
+        font-size: 1.1rem;
+        color: var(--text-muted);
+        max-width: 600px;
+        margin: 0 auto;
+    }
+
+    /* Grid layout */
+    .products-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+        gap: 2rem;
+        margin-bottom: 3rem;
+    }
+
+    .product-card {
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        overflow: hidden;
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .product-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 12px 20px -5px rgba(0,0,0,0.12);
+        border-color: #cbd5e1;
+    }
+
+    .product-image {
+        width: 100%;
+        height: 240px;
+        object-fit: cover;
+        border-bottom: 1px solid var(--border);
+    }
+
+    .product-content {
+        padding: 1.5rem;
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .product-category {
+        font-size: 0.8rem;
+        color: var(--primary);
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        margin-bottom: 0.5rem;
+    }
+
+    .product-title {
+        font-size: 1.15rem;
+        margin: 0 0 1rem 0;
+        color: var(--text-main);
+    }
+
+    .product-price {
+        font-size: 1.35rem;
+        font-weight: 700;
+        color: var(--text-main);
+        margin-bottom: 1.5rem;
+        margin-top: auto;
+    }
+
+    .product-card .btn {
+        width: 100%;
+        justify-content: center;
+    }
+</style>
+{% endblock %}
+
+
+{% block content %}
+<div class="page-header">
+    <h1>Catálogo de Cascos</h1>
+    <p>Explora nuestra selección de {{ cascos|length }} modelos diseñados para tu máxima seguridad en cualquier aventura.</p>
+</div>
+
+<div class="products-grid">
+    {% for casco in cascos %}
+    <!-- HCI: Reutilización de componentes que el usuario ya aprendió a usar en la vista de inicio -->
+    <article class="product-card">
+        <img class="product-image" src="{{ casco.imagen }}" alt="Fotografía del producto: {{ casco.nombre }}">
+        <div class="product-content">
+            <span class="product-category">{{ casco.tipo }}</span>
+            <h3 class="product-title">{{ casco.nombre }}</h3>
+            <div class="product-price">${{ "%.2f"|format(casco.precio) }}</div>
+            
+            <a href="{{ url_for('add_to_cart', id=casco.id) }}" class="btn btn-primary" aria-label="Añadir {{ casco.nombre }} al Carrito">
+                <i data-lucide="shopping-cart" size="18"></i> Añadir al Carrito
+            </a>
+        </div>
+    </article>
+    {% endfor %}
+</div>
+{% endblock %}
