@@ -15,6 +15,44 @@
     @media (max-width: 900px) {
         .cart-layout {
             grid-template-columns: 1fr;
+            gap: 1.5rem;
+        }
+    }
+
+    @media (max-width: 600px) {
+        .cart-item {
+            flex-direction: column;
+            align-items: flex-start;
+            text-align: center;
+        }
+        .item-image {
+            margin: 0 auto;
+        }
+        .item-details {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .item-total {
+            width: 100%;
+            text-align: center;
+            margin-top: 1rem;
+            background: var(--background);
+            padding: 0.5rem;
+            border-radius: 8px;
+        }
+        .cart-header {
+            flex-direction: column;
+            gap: 0.5rem;
+            text-align: center;
+        }
+        .cart-items {
+            padding: 1.5rem 1rem;
+        }
+        .cart-summary {
+            position: relative;
+            top: 0;
         }
     }
 
