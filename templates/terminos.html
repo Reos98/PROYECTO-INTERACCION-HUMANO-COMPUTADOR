@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+
+{% block title %}Términos y Condiciones | MotoSafe{% endblock %}
+
+{% block extra_css %}
+<style>
+    .legal-container {
+        max-width: 800px;
+        margin: 2rem auto;
+        background: var(--surface);
+        padding: 3rem;
+        border-radius: 12px;
+        border: 1px solid var(--border);
+        box-shadow: 0 4px 6px rgba(0,0,0,0.02);
+    }
+
+    .legal-container h1 {
+        margin-top: 0;
+        color: var(--primary);
+        font-size: 2rem;
+        border-bottom: 2px solid var(--background);
+        padding-bottom: 1rem;
+        margin-bottom: 2rem;
+    }
+
+    .legal-container h2 {
+        font-size: 1.3rem;
+        margin-top: 2rem;
+        color: var(--text-main);
+    }
+
+    .legal-container p, .legal-container li {
+        color: var(--text-muted);
+        line-height: 1.7;
+        font-size: 1.05rem;
+        margin-bottom: 1rem;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="legal-container">
+    <h1>Términos y Condiciones</h1>
+    <p>Última actualización: 1 de Abril de 2026</p>
+    
+    <h2>1. Introducción</h2>
+    <p>Bienvenido a MotoSafe. Al acceder y usar nuestro sitio web, usted acepta cumplir con los siguientes términos y condiciones. MotoSafe es una plataforma desarrollada para ofrecer el mejor equipamiento a nuestros clientes.</p>
+    
+    <h2>2. Uso del Sitio Web</h2>
+    <p>El propósito de MotoSafe es servir como catálogo y tienda de cascos de protección. Nos esforzamos continuamente por asegurar que todas las transacciones monetarias sean 100% seguras y eficientes mediante procesadores de pago validados.</p>
+
+    <h2>3. Productos y Garantías</h2>
+    <p>La información sobre materiales, pesos y descripciones de los cascos listados en MotoSafe está basada en simulaciones. Sin embargo, en un entorno real, todos nuestros productos cumplirían con los rigurosos estándares de seguridad europeos y americanos (ECE, DOT, Snell).</p>
+    
+    <h2>4. Modificaciones</h2>
+    <p>MotoSafe se reserva el derecho de modificar estos términos en cualquier momento para mejorar la experiencia de nuestros usuarios.</p>
+
+    <div style="margin-top: 3rem;">
+        <a href="{{ url_for('index') }}" class="btn btn-secondary"><i data-lucide="arrow-left" size="16"></i> Volver al Inicio</a>
+    </div>
+</div>
+{% endblock %}

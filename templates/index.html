@@ -45,12 +45,12 @@
 
     .products-grid {
         display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
         gap: 2rem;
         margin-bottom: 2rem;
     }
 
-    /* Tarjetas Interactivas - HCI: El elemento es intuitivamente un bloque clickeable. Sus micro-animaciones brindan confirmación táctil/visual. */
+    /* Tarjetas Interactivas */
     .product-card {
         background: var(--surface);
         border: 1px solid var(--border);
@@ -91,17 +91,42 @@
     }
 
     .product-title {
-        font-size: 1.15rem;
-        margin: 0 0 1rem 0;
+        font-size: 1.25rem;
+        margin: 0 0 0.5rem 0;
         color: var(--text-main);
     }
 
+    .product-desc {
+        font-size: 0.95rem;
+        color: var(--text-muted);
+        margin-bottom: 1rem;
+        line-height: 1.5;
+        flex-grow: 1;
+    }
+
+    .product-features {
+        display: flex;
+        gap: 1rem;
+        margin-bottom: 1.5rem;
+        font-size: 0.85rem;
+        color: var(--text-muted);
+        padding: 0.75rem;
+        background: var(--background);
+        border-radius: 8px;
+    }
+
+    .feature-item {
+        display: flex;
+        align-items: center;
+        gap: 0.4rem;
+    }
+
     .product-price {
-        font-size: 1.35rem;
+        font-size: 1.45rem;
         font-weight: 700;
         color: var(--text-main);
-        margin-bottom: 1.5rem;
-        margin-top: auto; /* Empuja el precio y botón al final del card (Alineación visual consistente) */
+        margin-bottom: 1.25rem;
+        margin-top: auto;
     }
 
     .product-card .btn {
@@ -116,7 +141,7 @@
 <section class="hero">
     <h1>Protección Superior para tu Viaje</h1>
     <p>Descubre nuestra colección de cascos premium. Diseño aerodinámico, materiales de alta resistencia y la tecnología más avanzada para tu completa seguridad.</p>
-    <a href="#catalogo" class="btn btn-primary" style="font-size: 1.1rem; padding: 0.9rem 2.5rem; border-radius: 999px;">
+    <a href="{{ url_for('catalogo') }}" class="btn btn-primary" style="font-size: 1.1rem; padding: 0.9rem 2.5rem; border-radius: 999px;">
         Ver Colección Completa
     </a>
 </section>
@@ -125,13 +150,26 @@
     <h2 class="section-title"><i data-lucide="award" color="var(--primary)"></i> Destacados de la Semana</h2>
     
     <div class="products-grid">
-        {% for casco in cascos %}
-        <!-- HCI: El uso de Ley de proximidad en UX, cada tarjeta agrupa información de 1 solo sujeto y su respectiva acción de compra -->
+        {% for casco in cascos[:6] %}
+        <!-- HCI: El uso de Ley de proximidad en UX, cada tarjeta agrupa información de 1 solo sujeto -->
         <article class="product-card">
             <img class="product-image" src="{{ casco.imagen }}" alt="Fotografía del producto: {{ casco.nombre }}">
             <div class="product-content">
                 <span class="product-category">{{ casco.tipo }}</span>
                 <h3 class="product-title">{{ casco.nombre }}</h3>
+                
+                {% if casco.descripcion %}
+                    <p class="product-desc">{{ casco.descripcion }}</p>
+                    <div class="product-features">
+                        <div class="feature-item" title="Material">
+                            <i data-lucide="layers" size="16"></i> <span style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 120px;">{{ casco.material }}</span>
+                        </div>
+                        <div class="feature-item" title="Peso">
+                            <i data-lucide="weight" size="16"></i> {{ casco.peso }}
+                        </div>
+                    </div>
+                {% endif %}
+
                 <div class="product-price">${{ "%.2f"|format(casco.precio) }}</div>
                 
                 <a href="{{ url_for('add_to_cart', id=casco.id) }}" class="btn btn-primary" aria-label="Añadir {{ casco.nombre }} al Carrito">

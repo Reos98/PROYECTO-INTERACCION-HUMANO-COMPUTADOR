@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+
+{% block title %}Envíos y Devoluciones | MotoSafe{% endblock %}
+
+{% block extra_css %}
+<style>
+    .legal-container {
+        max-width: 800px;
+        margin: 2rem auto;
+        background: var(--surface);
+        padding: 3rem;
+        border-radius: 12px;
+        border: 1px solid var(--border);
+        box-shadow: 0 4px 6px rgba(0,0,0,0.02);
+    }
+    .legal-container h1 {
+        margin-top: 0;
+        color: var(--primary);
+        font-size: 2rem;
+        border-bottom: 2px solid var(--background);
+        padding-bottom: 1rem;
+        margin-bottom: 2rem;
+    }
+    .legal-container h2 {
+        font-size: 1.3rem;
+        margin-top: 2rem;
+        color: var(--text-main);
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
+    .legal-container p {
+        color: var(--text-muted);
+        line-height: 1.7;
+        font-size: 1.05rem;
+        margin-bottom: 1rem;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="legal-container">
+    <h1>Envíos y Devoluciones MotoSafe</h1>
+    
+    <h2><i data-lucide="truck" color="var(--primary)"></i> Tiempos de Envío</h2>
+    <p>Todos nuestros pedidos se despachan en menos de 24 horas. Ofrecemos envío estándar de 3 a 5 días hábiles y envío exprés de 1 a 2 días hábiles.</p>
+    
+    <h2><i data-lucide="map-pin" color="var(--primary)"></i> Cobertura</h2>
+    <p>Hacemos entregas a nivel nacional con couriers certificados. Todos nuestros pedidos cuentan con un número de guía y seguimiento en tiempo real para que mantengas tu equipo localizado.</p>
+
+    <h2><i data-lucide="rotate-ccw" color="var(--primary)"></i> Proceso de Devolución</h2>
+    <p>Si la talla de tu casco no se ajusta correctamente, MotoSafe ofrece un periodo de 30 días para cambios y devoluciones sin ningún costo. El producto debe estar en su empaque original sin alteraciones o marcas de uso.</p>
+
+    <div style="margin-top: 3rem;">
+        <a href="{{ url_for('index') }}" class="btn btn-secondary"><i data-lucide="arrow-left" size="16"></i> Volver al Inicio</a>
+    </div>
+</div>
+{% endblock %}

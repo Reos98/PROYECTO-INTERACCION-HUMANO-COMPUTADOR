@@ -1,0 +1,100 @@
+{% extends 'base.html' %}
+
+{% block title %}Guía de Tallas | MotoSafe{% endblock %}
+
+{% block extra_css %}
+<style>
+    .legal-container {
+        max-width: 800px;
+        margin: 2rem auto;
+        background: var(--surface);
+        padding: 3rem;
+        border-radius: 12px;
+        border: 1px solid var(--border);
+        box-shadow: 0 4px 6px rgba(0,0,0,0.02);
+    }
+    .legal-container h1 {
+        margin-top: 0;
+        color: var(--primary);
+        font-size: 2rem;
+        border-bottom: 2px solid var(--background);
+        padding-bottom: 1rem;
+        margin-bottom: 2rem;
+    }
+    .legal-container p {
+        color: var(--text-muted);
+        line-height: 1.7;
+        font-size: 1.05rem;
+        margin-bottom: 1rem;
+    }
+    .size-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 2rem;
+        margin-bottom: 2rem;
+    }
+    .size-table th, .size-table td {
+        border: 1px solid var(--border);
+        padding: 1rem;
+        text-align: center;
+    }
+    .size-table th {
+        background: var(--background);
+        font-weight: 600;
+        color: var(--text-main);
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="legal-container">
+    <h1>Guía de Tallas MotoSafe</h1>
+    <p>Para asegurar que tu casco de MotoSafe te brinde la mayor protección, debe quedar ajustado. Sigue estas instrucciones para medir la circunferencia de tu cabeza:</p>
+    
+    <div style="background: var(--background); padding: 1.5rem; border-radius: 8px; margin: 1.5rem 0;">
+        <h3 style="margin-top:0;">Cómo medir:</h3>
+        <p style="margin-bottom:0;">Usa una cinta métrica flexible. Mide la circunferencia de tu cabeza aproximadamente 2.5 cm por encima de tus cejas y orejas. Esta suele ser la parte más ancha de la cabeza.</p>
+    </div>
+
+    <table class="size-table">
+        <thead>
+            <tr>
+                <th>Talla</th>
+                <th>Circunferencia (cm)</th>
+                <th>Sombrero (USA)</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>XS</td>
+                <td>53 - 54 cm</td>
+                <td>6 5/8 - 6 3/4</td>
+            </tr>
+            <tr>
+                <td>S</td>
+                <td>55 - 56 cm</td>
+                <td>6 7/8 - 7</td>
+            </tr>
+            <tr>
+                <td>M</td>
+                <td>57 - 58 cm</td>
+                <td>7 1/8 - 7 1/4</td>
+            </tr>
+            <tr>
+                <td>L</td>
+                <td>59 - 60 cm</td>
+                <td>7 3/8 - 7 1/2</td>
+            </tr>
+            <tr>
+                <td>XL</td>
+                <td>61 - 62 cm</td>
+                <td>7 5/8 - 7 3/4</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div style="margin-top: 3rem;">
+        <a href="{{ url_for('index') }}" class="btn btn-secondary"><i data-lucide="arrow-left" size="16"></i> Volver al Inicio</a>
+    </div>
+</div>
+{% endblock %}

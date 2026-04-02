@@ -11,17 +11,17 @@
     <script src="https://unpkg.com/lucide@latest"></script>
     <style>
         :root {
-            /* Paleta de colores de alto contraste - HCI: Mejora la accesibilidad y la lectura rápida */
-            --primary: #2563eb;
-            --primary-hover: #1d4ed8;
-            --secondary: #0f172a;
-            --background: #f8fafc;
-            --surface: #ffffff;
-            --text-main: #1e293b;
-            --text-muted: #64748b;
-            --border: #e2e8f0;
+            /* Dark Theme con colores vibrantes y eléctricos (Neon Design) - HCI: Estética futurista premium */
+            --primary: #f97316; /* Naranja eléctrico/vibrante */
+            --primary-hover: #ea580c;
+            --secondary: #0f172a; /* Slate 900 */
+            --background: #020617; /* Background extremadamente oscuro */
+            --surface: #1e293b; /* Superficie elevada */
+            --text-main: #f8fafc; /* Texto claro de alto contraste */
+            --text-muted: #94a3b8; /* Texto secundario gris claro */
+            --border: #334155; /* Bordes sutiles */
             --error: #ef4444;
-            --success: #22c55e;
+            --success: #10b981;
             --warning: #f59e0b;
         }
 
@@ -41,12 +41,14 @@
            ======================== */
         /* HCI: Sticky header permite acceder a la navegación principal, buscador y carrito sin necesidad de scrollear arriba */
         header {
-            background-color: var(--surface);
-            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+            background-color: rgba(30, 41, 59, 0.85); /* Superficie semi-transparente gélida */
+            backdrop-filter: blur(12px); /* Glassmorphism */
+            -webkit-backdrop-filter: blur(12px);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
             position: sticky;
             top: 0;
             z-index: 100;
-            border-bottom: 1px solid var(--border);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
         }
 
         .nav-container {
@@ -173,6 +175,17 @@
         
         .cart-icon:hover {
             background: var(--background);
+        }
+
+        /* HCI: Animación de microinteracción para dar feedback sensorial al añadir producto */
+        @keyframes cartPulse {
+            0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(249, 115, 22, 0.7); }
+            50% { transform: scale(1.2); box-shadow: 0 0 0 15px rgba(249, 115, 22, 0); background: var(--primary); color: white; border-radius: 50%; }
+            100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(249, 115, 22, 0); }
+        }
+
+        .cart-animate {
+            animation: cartPulse 0.6s ease-out;
         }
 
         /* HCI: Visibilidad del Estado del Sistema. Badge dinámica e intuitiva */
@@ -302,7 +315,7 @@
     <header>
         <div class="nav-container">
             <a href="{{ url_for('index') }}" class="logo">
-                <i data-lucide="shield" color="var(--primary)" size="28"></i> MotoSafe
+                <img src="/static/img/logo.png" alt="MotoSafe Logo" style="height: 42px; object-fit: contain; border-radius: 8px;">
             </a>
             
             <nav>
@@ -362,11 +375,11 @@
     <footer>
         <div class="footer-content">
             <div class="footer-col">
-                <div class="logo" style="margin-bottom: 1rem; font-size:1.25rem;">
-                    <i data-lucide="shield" color="white" size="24"></i> <span style="color:white">MotoSafe</span>
+                <div class="logo" style="margin-bottom: 1rem;">
+                    <img src="/static/img/logo.png" alt="MotoSafe Logo" style="height: 48px; object-fit: contain; border-radius: 6px;">
                 </div>
                 <p style="color: #94a3b8; font-size: 0.95rem; line-height: 1.6;">
-                    Tu seguridad es nuestra prioridad. Diseño integral con enfoque en Interacción Humano-Computador para que encuentres el casco perfecto.
+                    Tu seguridad es nuestra prioridad. Diseño integral con tecnología avanzada para que encuentres el casco perfecto.
                 </p>
             </div>
             <div class="footer-col">
@@ -374,22 +387,22 @@
                 <ul>
                     <li><a href="{{ url_for('catalogo') }}">Ver Catálogo</a></li>
                     <li><a href="{{ url_for('info') }}">Sobre Nosotros</a></li>
-                    <li><a href="#">Términos y Condiciones</a></li>
-                    <li><a href="#">Política de Privacidad</a></li>
+                    <li><a href="{{ url_for('terminos') }}">Términos y Condiciones</a></li>
+                    <li><a href="{{ url_for('privacidad') }}">Política de Privacidad</a></li>
                 </ul>
             </div>
             <div class="footer-col">
                 <h3>Ayuda al Usuario</h3>
                 <ul>
                     <li><a href="{{ url_for('soporte') }}">Centro de Ayuda</a></li>
-                    <li><a href="#">Guía de Tallas (HCI)</a></li>
-                    <li><a href="#">Envíos y Devoluciones</a></li>
-                    <li><a href="#">Contacto</a></li>
+                    <li><a href="{{ url_for('tallas') }}">Guía de Tallas</a></li>
+                    <li><a href="{{ url_for('envios') }}">Envíos y Devoluciones</a></li>
+                    <li><a href="{{ url_for('contacto') }}">Contacto</a></li>
                 </ul>
             </div>
         </div>
         <div class="footer-bottom">
-            <span>&copy; 2026 MotoSafe. Proyecto de IHC.</span>
+            <span>&copy; 2026 MotoSafe. Todos los derechos reservados.</span>
             <div style="display: flex; gap: 1rem;">
                 <!-- Iconos sociales de demostración -->
                 <a href="#" style="color: #64748b;"><i data-lucide="instagram" size="20"></i></a>
@@ -414,6 +427,35 @@
                 setTimeout(() => flash.remove(), 300);
             });
         }, 5000);
+
+        // HCI: Interceptar clics en botones de añadir al carrito para mostrar retroalimentación visual inmediata
+        document.querySelectorAll('a[href*="/add_to_cart/"]').forEach(button => {
+            button.addEventListener('click', function(e) {
+                // Prevenimos el salto instantáneo
+                e.preventDefault();
+                const url = this.getAttribute('href');
+                
+                // Aplicamos la clase de animación al icono del carrito
+                const cartIcon = document.querySelector('.cart-icon');
+                if(cartIcon) {
+                    cartIcon.classList.remove('cart-animate'); // reset si existiera
+                    // Forzar reflow
+                    void cartIcon.offsetWidth; 
+                    cartIcon.classList.add('cart-animate');
+                }
+                
+                // Cambiar el estilo del botón momentáneamente
+                const originalContent = this.innerHTML;
+                this.innerHTML = '<i data-lucide="check" size="18"></i> ¡Añadido!';
+                this.style.background = 'var(--success)';
+                lucide.createIcons();
+                
+                // Redirigir al servidor tras la animación (600ms) responsable de guardar realmente en la sesión
+                setTimeout(() => {
+                    window.location.href = url;
+                }, 600);
+            });
+        });
     </script>
 </body>
 </html>

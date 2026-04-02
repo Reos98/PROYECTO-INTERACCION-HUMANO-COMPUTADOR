@@ -1,0 +1,69 @@
+{% extends 'base.html' %}
+
+{% block title %}Contacto | MotoSafe{% endblock %}
+
+{% block extra_css %}
+<style>
+    .contact-container {
+        max-width: 800px;
+        margin: 2rem auto;
+        background: var(--surface);
+        padding: 3rem;
+        border-radius: 12px;
+        border: 1px solid var(--border);
+        box-shadow: 0 4px 6px rgba(0,0,0,0.02);
+    }
+    .contact-container h1 {
+        margin-top: 0;
+        color: var(--primary);
+        font-size: 2rem;
+        border-bottom: 2px solid var(--background);
+        padding-bottom: 1rem;
+        margin-bottom: 2rem;
+    }
+    
+    .form-group {
+        margin-bottom: 1.5rem;
+    }
+    .form-group label {
+        display: block;
+        font-weight: 500;
+        margin-bottom: 0.5rem;
+    }
+    .form-control {
+        width: 100%;
+        padding: 0.8rem;
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        box-sizing: border-box;
+        font-family: inherit;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="contact-container">
+    <h1>Contáctanos</h1>
+    <p style="color: var(--text-muted); margin-bottom: 2rem;">¿Tienes alguna duda sobre nuestros cascos o sobre tu orden? Escríbenos y el equipo de MotoSafe (o nuestros desarrolladores) te contactarán pronto.</p>
+    
+    <div class="form-group">
+        <label>Nombre Completo</label>
+        <input type="text" class="form-control" placeholder="Tus nombres">
+    </div>
+    
+    <div class="form-group">
+        <label>Correo Electrónico</label>
+        <input type="email" class="form-control" placeholder="tu@email.com">
+    </div>
+    
+    <div class="form-group">
+        <label>Mensaje</label>
+        <textarea class="form-control" rows="5" placeholder="¿Cómo podemos ayudarte?"></textarea>
+    </div>
+
+    <!-- Simulación visual, solo rediriendo al inicio y mostrando flash -->
+    <a href="{{ url_for('index') }}" class="btn btn-primary" style="padding: 1rem 2rem; font-size: 1.05rem;" onclick="alert('Mensaje enviado. ¡Nos contactaremos pronto!');">
+        <i data-lucide="send" size="18"></i> Enviar Mensaje
+    </a>
+</div>
+{% endblock %}

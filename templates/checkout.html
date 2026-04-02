@@ -1,0 +1,234 @@
+{% extends 'base.html' %}
+
+{% block title %}Checkout | MotoSafe{% endblock %}
+
+{% block extra_css %}
+<style>
+    .checkout-container {
+        display: grid;
+        grid-template-columns: 1fr 400px;
+        gap: 2rem;
+        max-width: 1000px;
+        margin: 2rem auto;
+    }
+
+    @media (max-width: 800px) {
+        .checkout-container {
+            grid-template-columns: 1fr;
+        }
+    }
+
+    .form-section {
+        background: var(--surface);
+        padding: 2rem;
+        border-radius: 12px;
+        border: 1px solid var(--border);
+    }
+    
+    .form-section h2 {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        margin-top: 0;
+        margin-bottom: 1.5rem;
+        font-size: 1.4rem;
+        border-bottom: 2px solid var(--border);
+        padding-bottom: 0.5rem;
+    }
+
+    .form-group.doble {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 1rem;
+    }
+
+    .form-group {
+        margin-bottom: 1.25rem;
+    }
+
+    .form-group label {
+        display: block;
+        font-size: 0.95rem;
+        font-weight: 500;
+        margin-bottom: 0.4rem;
+    }
+
+    .form-control {
+        width: 100%;
+        padding: 0.75rem;
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        font-family: inherit;
+        font-size: 1rem;
+        box-sizing: border-box;
+    }
+    
+    .form-control:focus {
+        outline: none;
+        border-color: var(--primary);
+        box-shadow: 0 0 0 3px rgba(37,99,235,0.1);
+    }
+
+    .credit-card-icon {
+        display: flex;
+        gap: 0.5rem;
+        margin-bottom: 1rem;
+        color: var(--text-muted);
+    }
+
+    .summary-section {
+        background: var(--background);
+        padding: 2rem;
+        border-radius: 12px;
+        border: 1px solid var(--border);
+        height: fit-content;
+    }
+
+    .summary-total {
+        font-size: 1.5rem;
+        font-weight: 700;
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 1.5rem;
+        padding-bottom: 1.5rem;
+        border-bottom: 1px solid var(--border);
+    }
+
+    /* Estilos del Modal */
+    .modal-overlay {
+        position: fixed;
+        top: 0; left: 0; right: 0; bottom: 0;
+        background: rgba(2, 6, 23, 0.8);
+        backdrop-filter: blur(8px);
+        -webkit-backdrop-filter: blur(8px);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 1000;
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.3s ease;
+    }
+
+    .modal-overlay.visible {
+        opacity: 1;
+        pointer-events: auto;
+    }
+
+    .modal-content {
+        background: var(--surface);
+        padding: 3rem;
+        border-radius: 16px;
+        border: 1px solid var(--border);
+        box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+        text-align: center;
+        max-width: 450px;
+        transform: scale(0.9);
+        transition: transform 0.3s ease;
+    }
+
+    .modal-overlay.visible .modal-content {
+        transform: scale(1);
+    }
+
+    .modal-icon {
+        margin-bottom: 1.5rem;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="checkout-container">
+    <div class="form-section">
+        <form id="checkoutForm" action="{{ url_for('checkout') }}" method="POST">
+            <h2><i data-lucide="map-pin" color="var(--primary)"></i> Información de Envío</h2>
+            <div class="form-group doble">
+                <div>
+                    <label>Nombre</label>
+                    <input type="text" class="form-control" required placeholder="Ej. Juan">
+                </div>
+                <div>
+                    <label>Apellido</label>
+                    <input type="text" class="form-control" required placeholder="Ej. Pérez">
+                </div>
+            </div>
+            <div class="form-group">
+                <label>Dirección</label>
+                <input type="text" class="form-control" required placeholder="Av. Principal 123">
+            </div>
+
+            <h2 style="margin-top: 3rem;"><i data-lucide="credit-card" color="var(--primary)"></i> Método de Pago</h2>
+            <div class="credit-card-icon">
+                <i data-lucide="credit-card"></i> Visa, MasterCard, Amex
+            </div>
+            <div class="form-group">
+                <label>Número de Tarjeta</label>
+                <input type="text" class="form-control" required placeholder="0000 0000 0000 0000" maxlength="19">
+            </div>
+            <div class="form-group doble">
+                <div>
+                    <label>Fecha de Expiración</label>
+                    <input type="text" class="form-control" required placeholder="MM/YY">
+                </div>
+                <div>
+                    <label>CVC</label>
+                    <input type="text" class="form-control" required placeholder="123" maxlength="4">
+                </div>
+            </div>
+
+            <button type="submit" class="btn btn-primary" style="width: 100%; justify-content: center; padding: 1rem; font-size: 1.1rem; margin-top: 2rem;">
+                <i data-lucide="lock"></i> Confirmar Pago Seguro
+            </button>
+        </form>
+    </div>
+
+    <div class="summary-section">
+        <h2>Resumen</h2>
+        <p style="color: var(--text-muted); font-size: 0.95rem; margin-bottom: 2rem;">Verifica tu orden antes de proceder con el pago de nuestra plataforma.</p>
+        
+        <div class="summary-total">
+            <span>Total:</span>
+            <span>${{ "%.2f"|format(total) }}</span>
+        </div>
+        
+        <div style="font-size: 0.85rem; color: var(--text-muted); display: flex; align-items: start; gap: 0.5rem;">
+            <i data-lucide="shield-check" size="20" color="var(--success)"></i>
+            <p style="margin: 0;">Transacción 100% segura. MotoSafe protege tu información financiera mediante encriptación TLS avanzada.</p>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Emergente de Éxito -->
+<div id="successModal" class="modal-overlay">
+    <div class="modal-content">
+        <div class="modal-icon">
+            <i data-lucide="check-circle" size="64" color="var(--success)"></i>
+        </div>
+        <h2>¡Gracias por la compra realizada!</h2>
+        <p>Tu orden de cascos ha sido procesada con éxito. Te enviaremos un correo con los detalles del envío y seguimiento pronto.</p>
+        <p style="font-size: 0.9rem; color: var(--text-muted); margin-top: 1.5rem;">Redirigiendo a la página principal...</p>
+    </div>
+</div>
+
+<script>
+    const form = document.getElementById('checkoutForm');
+    const modal = document.getElementById('successModal');
+
+    form.addEventListener('submit', function(e) {
+        e.preventDefault(); 
+        
+        // Enviamos la petición POST para vaciar el carrito
+        fetch("{{ url_for('checkout') }}", {
+            method: 'POST'
+        }).then(() => {
+            // Mostramos el modal
+            modal.classList.add('visible');
+            
+            // Esperamos unos segundos y redirigimos
+            setTimeout(() => {
+                window.location.href = "{{ url_for('index') }}";
+            }, 3500);
+        });
+    });
+</script>
+{% endblock %}

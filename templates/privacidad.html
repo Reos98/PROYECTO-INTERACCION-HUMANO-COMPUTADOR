@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+
+{% block title %}Política de Privacidad | MotoSafe{% endblock %}
+
+{% block extra_css %}
+<style>
+    .legal-container {
+        max-width: 800px;
+        margin: 2rem auto;
+        background: var(--surface);
+        padding: 3rem;
+        border-radius: 12px;
+        border: 1px solid var(--border);
+        box-shadow: 0 4px 6px rgba(0,0,0,0.02);
+    }
+    .legal-container h1 {
+        margin-top: 0;
+        color: var(--primary);
+        font-size: 2rem;
+        border-bottom: 2px solid var(--background);
+        padding-bottom: 1rem;
+        margin-bottom: 2rem;
+    }
+    .legal-container h2 {
+        font-size: 1.3rem;
+        margin-top: 2rem;
+        color: var(--text-main);
+    }
+    .legal-container p, .legal-container li {
+        color: var(--text-muted);
+        line-height: 1.7;
+        font-size: 1.05rem;
+        margin-bottom: 1rem;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="legal-container">
+    <h1>Política de Privacidad</h1>
+    <p>Última actualización: 1 de Abril de 2026</p>
+    
+    <h2>1. Recopilación de Información</h2>
+    <p>En MotoSafe respetamos su privacidad. Recopilamos sus datos exclusivamente para procesar sus compras y ofrecerle la experiencia más óptima de navegación en nuestra tienda. Toda información ingresada en nuestros formularios es guardada con los más altos estándares de seguridad.</p>
+    
+    <h2>2. Uso de la Información</h2>
+    <p>Cualquier dato introducido será utilizado únicamente para proporcionar seguimiento a las órdenes, y confirmar que su equipo llegue a sus manos. MotoSafe no comercializa ni cruza datos de usuarios con terceros bajo ninguna circunstancia.</p>
+
+    <h2>3. Cookies y Tecnologías Similares</h2>
+    <p>Utilizamos cookies de sesión seguras estrictamente necesarias para mantener el estado de su conexión (login) y su carrito de compras virtual activo mientras navega por MotoSafe.</p>
+
+    <div style="margin-top: 3rem;">
+        <a href="{{ url_for('index') }}" class="btn btn-secondary"><i data-lucide="arrow-left" size="16"></i> Volver al Inicio</a>
+    </div>
+</div>
+{% endblock %}
