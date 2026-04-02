@@ -1,13 +1,13 @@
 from flask import Flask, render_template, request, session, redirect, url_for, flash
-
 import json
 import os
+import tempfile
 
 app = Flask(__name__)
 # HCI: Usamos secret_key para manejar la sesión del usuario de forma segura y poder dar feedback con 'flash'
 app.secret_key = 'super_secret_key_hci' 
 
-USERS_FILE = 'users.json'
+USERS_FILE = os.path.join(tempfile.gettempdir(), 'users.json')
 
 def load_users():
     if os.path.exists(USERS_FILE):
